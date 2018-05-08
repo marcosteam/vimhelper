@@ -24,5 +24,30 @@ while True:
         break
     setPlugin(name)
 
-configFile.write('''call vundle#end()\nfiletype plugin indent on''')
+configFile.writelines('''call vundle#end()\nfiletype plugin indent on''')
 
+print('恭喜！你已完成了第一步！\n现在，我们开始配置你的Vim小细节。')
+
+def decide(configName,config):
+    while True:
+        if config == 'y':
+            configFile.writelines('set ' + configName)
+            break
+        elif config == 'n':
+            configFile.writelines('set ' + configName + '!')
+            break
+        else:
+            config = input('输入错误！请重新输入:')
+
+def decide_Value(configName,value):
+    configFile.writelines('set %s=%d'%(configName,value))
+
+lineNumberConfig1 = input('是否启用行号？y/n:')
+decide(number,lineNumberConfig1)
+
+lineNumberConfig2 = input('是否启用相对行号？y/n:')
+decide('relativenumber',lineNumberConfig2)
+
+if lineNumberConfig1 or lineNumberConfig1 == y:
+    lineNumberConfig3 = input('那么，行号前面要空多少格呢？:')
+    decide_Value(numberwidth,lineNumberConfig3)
