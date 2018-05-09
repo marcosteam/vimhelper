@@ -26,7 +26,7 @@ while True:
 
 configFile.writelines('call vundle#end()\nfiletype plugin indent on')
 
-print('恭喜！你已完成了第一步！\n现在，我们开始配置你的Vim小细节。')
+print('恭喜！你已完成了第一步！\n现在，我们开始配置你的Vim小细节。\n')
 
 def decide(configName,config):
     while True:
@@ -48,11 +48,12 @@ decide('number',lineNumberConfig1)
 lineNumberConfig2 = input('是否启用相对行号？y/n:')
 decide('relativenumber',lineNumberConfig2)
 
-if lineNumberConfig1 or lineNumberConfig1 == 'y':
-    lineNumberConfig3 = input('那么，行号前面要空多少格呢？:')
+if lineNumberConfig1 or lineNumberConfig2 == 'y':
+    lineNumberConfig3 = int(input('那么，行号前面要空多少格呢？:'))
     decide_Value('numberwidth',lineNumberConfig3)
 
-captitalSearchConfig = input('''接下来，设置大小写查找模式：
+captitalSearchConfig = input('''接下来，设置查找模式：
+大小写查找模式：
 1.大小写不敏感查找
 2.智能大小写查找（若有一个大写字母，则切换到大小写敏感查找）
 3.大小写敏感查找
@@ -61,6 +62,9 @@ if captitalSearchConfig == 1:
     configFile.writelines('set ignorecase')
 elif captitalSearchConfig == 3:
     configFile.writelines('set smartcase')
+
+hlsearchConfig = input('搜索时结果是否高亮显示？y/n:')
+decide('hlsearch',hlsearchConfig)
 
 cmdConfig = input('是否显示在底栏中显示指令？y/n:')
 decide('showcmd',cmdConfig)
@@ -74,5 +78,24 @@ if leaderKeyConfig == 'y':
         else:
             print('输入错误，请重新输入！')
 
+print('''缩进选项：
 
+1.文字的缩进模式是什么？
+    1)新增加的行和前一行使用相同的缩进形式。
+    2)半自动缩进模式（每一行都和前一行有相同的缩进量，且当遇到右花括号（}）时取消缩进形式等特性）
+    3)全自动缩进模式（智能识别C和Java等结构化程序设计语言，并且能用C语言的缩进格式来处理程序的缩进结构。）''')
+indentmode = {1:'autoindent',2:'smartindent',3:'cindent'}
+configFile.writelines('set %s' % indentmode[int(input('请输入序号:'))])
+
+tabConfig = int(input("2.一个Tab等于多少个空格？:"))
+decide_Value('tabstop',tabConfig)
+
+wrapConfig = input('3.是否开启自动折行？y/n:')
+while True:
+    if wrapConfig == 'n':
+        shiftWidthConfig = int(input('那么，文字滚动的速度为每次几字符？:'))
+        decide_Value('shiftwidth',shiftWidthConfig)
+        break
+    else:
+        break
 
