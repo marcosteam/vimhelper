@@ -1,4 +1,5 @@
 # -*- coding:UTF-8 -*-
+import os
 configFile = open('//home/marcosteam/文档/.vimrc','w')
 print("欢迎你使用Vim配置文件向导！\n\n我将带着你一步一步，配置你顺手的Vim配置！\n\n")
 configFile.write('''
@@ -99,3 +100,10 @@ while True:
     else:
         break
 
+mouseConfig = input('是否开启鼠标操作？y/n:')
+decide_Value('mouse','a')
+
+rulerConfig = input('是否显示标尺？（右下角显示光标位置）y/n:')
+decide('ruler',rulerConfig)
+
+configFile.writelines('let &termencoding=&encoding\nset fileencodings=utf-8,gbk ')
