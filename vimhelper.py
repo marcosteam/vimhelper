@@ -11,21 +11,20 @@ else:
 
 os.system('wget -x -p %s https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' % plugDirection)
 configFile.write('''
-call plug#begin()
+call plug#begin('~/.vim/plugged')
 " ADD YOUR PLUGIN\n
 ''')
 configFile.seek(2,0)
 
 def setPlugin(name):
     pluginName = "Plugin '%s'" % name
-    configFile.writelines(pluginName + '\n')
+    configFile.writelines(pluginName + '\n'*2)
 
 print('''第一步：配置插件
 Vim有很多强大的插件，如自动补全、变量修改等，通过插件你甚至可以自定义底栏的样式。
 请输入指定类型的插件名，详情可参考 https://github.com/VundleVim/Vundle.vim#quick-start （无需输入Plugin参数）
 每输入一行，请按回车继续输入，完成后直接回车即可。你也可以直接回车跳过此步骤。''')
 
-setPlugin('VundleVim/Vundle.vim')
 while True:
     name = input()
     if name == '':
