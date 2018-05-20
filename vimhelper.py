@@ -4,25 +4,25 @@ print("欢迎你使用Vim配置文件向导！\n\n我将带着你一步一步，
 configFileType = int(input('首先，请问你用的是哪种Vim呢？\n1.传统Vim\n2.neovim\n请输入编号：'))
 if configFileType == 1:
     configFile = open('//home/marcosteam/文档/.vimrc','w')
+    plugDirection = '~/.vim/autoload/'
 else:
     configFile = open('//home/marcosteam/文档/.init.vim','w')
+    plugDirection = '~/.config/nvim/autoload/plug.vim'
 
+os.system('wget -x -p %s https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' % plugDirection)
 configFile.write('''
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin()
 " ADD YOUR PLUGIN\n
 ''')
+configFile.seek(2,0)
 
 def setPlugin(name):
     pluginName = "Plugin '%s'" % name
-    configFile.seek(2,0)
-    configFile.writelines = pluginName + '\n'
+    configFile.writelines(pluginName + '\n')
 
 print('''第一步：配置插件
 Vim有很多强大的插件，如自动补全、变量修改等，通过插件你甚至可以自定义底栏的样式。
-请输入指定类型的插件名，详情可参考https://github.com/VundleVim/Vundle.vim#quick-start（无需输入Plugin参数）
+请输入指定类型的插件名，详情可参考 https://github.com/VundleVim/Vundle.vim#quick-start （无需输入Plugin参数）
 每输入一行，请按回车继续输入，完成后直接回车即可。你也可以直接回车跳过此步骤。''')
 
 setPlugin('VundleVim/Vundle.vim')
@@ -32,23 +32,23 @@ while True:
         break
     setPlugin(name)
 
-configFile.writelines('call vundle#end()\nfiletype plugin indent on')
+configFile.writelines('\ncall plug#end()\n')
 
 print('恭喜！你已完成了第一步！\n现在，我们开始配置你的Vim小细节。\n')
 
 def decide(configName,config):
     while True:
         if config == 'y':
-            configFile.writelines('set ' + configName)
+            configFile.writelines('set ' + configName + '\n')
             break
         elif config == 'n':
-            configFile.writelines('set ' + configName + '!')
+            configFile.writelines('set ' + configName + '!\n')
             break
         else:
             config = input('输入错误！请重新输入:')
 
 def decide_Value(configName,value):
-    configFile.writelines('set %s=%d'%(configName,value))
+    configFile.writelines('set %s=%s\n'%(configName,value))
 
 lineNumberConfig1 = input('是否启用行号？y/n:')
 decide('number',lineNumberConfig1)
