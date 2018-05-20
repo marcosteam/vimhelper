@@ -1,7 +1,12 @@
 # -*- coding:UTF-8 -*-
 import os
-configFile = open('//home/marcosteam/文档/.vimrc','w')
 print("欢迎你使用Vim配置文件向导！\n\n我将带着你一步一步，配置你顺手的Vim配置！\n\n")
+configFileType = int(input('首先，请问你用的是哪种Vim呢？\n1.传统Vim\n2.neovim\n请输入编号：'))
+if configFileType == 1:
+    configFile = open('//home/marcosteam/文档/.vimrc','w')
+else:
+    configFile = open('//home/marcosteam/文档/.init.vim','w')
+
 configFile.write('''
 set nocompatible
 filetype off
@@ -9,7 +14,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " ADD YOUR PLUGIN\n
 ''')
-def setPlugin(name = 'VundleVim/Vundle.vim'):#TODO:这里无需设置默认参数
+
+def setPlugin(name):
     pluginName = "Plugin '%s'" % name
     configFile.seek(2,0)
     configFile.writelines = pluginName + '\n'
@@ -19,6 +25,7 @@ Vim有很多强大的插件，如自动补全、变量修改等，通过插件�
 请输入指定类型的插件名，详情可参考https://github.com/VundleVim/Vundle.vim#quick-start（无需输入Plugin参数）
 每输入一行，请按回车继续输入，完成后直接回车即可。你也可以直接回车跳过此步骤。''')
 
+setPlugin('VundleVim/Vundle.vim')
 while True:
     name = input()
     if name == '':
@@ -100,10 +107,16 @@ while True:
     else:
         break
 
-mouseConfig = input('是否开启鼠标操作？y/n:')
+mouseConfig = input('是否开启鼠标操作？(y/n):')
 decide_Value('mouse','a')
 
 rulerConfig = input('是否显示标尺？（右下角显示光标位置）y/n:')
 decide('ruler',rulerConfig)
 
 configFile.writelines('let &termencoding=&encoding\nset fileencodings=utf-8,gbk ')
+
+print('恭喜！最基本的设置已经基本完成！\n但是，如果你想更方便的使用Vim，请使用Spacemaacs+evil插件（笑），别像我一样跳到这个坑结果被虐的死去活来...')
+configFile.close()
+os.system('pause')
+print('感谢你的使用！再见')
+os.system('pause')
