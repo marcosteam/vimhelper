@@ -1,14 +1,15 @@
 # -*- coding:UTF-8 -*-
 import os
 print("欢迎你使用Vim配置文件向导！\n\n我将带着你一步一步，配置你顺手的Vim配置！\n\n")
-configFileType = int(input('首先，请问你用的是哪种Vim呢？\n1.传统Vim\n2.neovim\n请输入编号：'))
+configFileType = int(input('首先，请选择你安装的Vim类型：？\n1.传统Vim\n2.neovim\n请输入编号：'))
 if configFileType == 1:
-    configFile = open('//home/marcosteam/文档/.vimrc','w')
+    configFile = open('~/.vimrc','w')
     plugDirection = '~/.vim/autoload/'
 else:
-    configFile = open('//home/marcosteam/文档/.init.vim','w')
+    configFile = open('~/.config/nvim/.init.vim','w')
     plugDirection = '~/.config/nvim/autoload/plug.vim'
 
+print('正在安装插件框架vim-plug...')
 os.system('wget -x -p %s https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' % plugDirection)
 configFile.write('''
 call plug#begin('~/.vim/plugged')
@@ -22,12 +23,12 @@ def setPlugin(name):
 
 print('''第一步：配置插件
 Vim有很多强大的插件，如自动补全、变量修改等，通过插件你甚至可以自定义底栏的样式。
-请输入指定类型的插件名，详情可参考 https://github.com/VundleVim/Vundle.vim#quick-start （无需输入Plugin参数）
+请输入指定类型的插件名，详情可参考 https://github.com/junegunn/vim-plug/wiki/tutorial （无需输入Plugin参数）
 每输入一行，请按回车继续输入，完成后直接回车即可。你也可以直接回车跳过此步骤。''')
 
 while True:
     name = input()
-    if name == '':
+    if name == None:
         break
     setPlugin(name)
 
@@ -49,10 +50,10 @@ def decide(configName,config):
 def decide_Value(configName,value):
     configFile.writelines('set %s=%s\n'%(configName,value))
 
-lineNumberConfig1 = input('是否启用行号？y/n:')
+lineNumberConfig1 = input('是否启用行号？(y/n):')
 decide('number',lineNumberConfig1)
 
-lineNumberConfig2 = input('是否启用相对行号？y/n:')
+lineNumberConfig2 = input('是否启用相对行号？(y/n):')
 decide('relativenumber',lineNumberConfig2)
 
 if lineNumberConfig1 or lineNumberConfig2 == 'y':
@@ -70,13 +71,13 @@ if captitalSearchConfig == 1:
 elif captitalSearchConfig == 3:
     configFile.writelines('set smartcase')
 
-hlsearchConfig = input('搜索时结果是否高亮显示？y/n:')
+hlsearchConfig = input('搜索时结果是否高亮显示？(y/n):')
 decide('hlsearch',hlsearchConfig)
 
-cmdConfig = input('是否显示在底栏中显示指令？y/n:')
+cmdConfig = input('是否显示在底栏中显示指令？(y/n):')
 decide('showcmd',cmdConfig)
 
-leaderKeyConfig = input("是否设置leaderkey?（默认为r'\'）y/n:\n（关于什么是leaderkey，参见：https://stackoverflow.com/questions/1764263/what-is-the-leader-in-a-vimrc-file/1764336#1764336）")
+leaderKeyConfig = input("是否设置leaderkey?（默认为r'\'）(y/n):\n（关于什么是leaderkey，参见：https://stackoverflow.com/questions/1764263/what-is-the-leader-in-a-vimrc-file/1764336#1764336）")
 if leaderKeyConfig == 'y':
     while True:
         keyconfig = input('设成什么键呢？')
@@ -97,7 +98,7 @@ configFile.writelines('set %s' % indentmode[int(input('请输入序号:'))])
 tabConfig = int(input("2.一个Tab等于多少个空格？:"))
 decide_Value('tabstop',tabConfig)
 
-wrapConfig = input('3.是否开启自动折行？y/n:')
+wrapConfig = input('3.是否开启自动折行？(y/n):')
 while True:
     if wrapConfig == 'n':
         shiftWidthConfig = int(input('那么，文字滚动的速度为每次几字符？:'))
@@ -106,16 +107,16 @@ while True:
     else:
         break
 
-mouseConfig = input('是否开启鼠标操作？(y/n):')
+mouseConfig = input('是否开启鼠标操作？((y/n)):')
 decide_Value('mouse','a')
 
-rulerConfig = input('是否显示标尺？（右下角显示光标位置）y/n:')
+rulerConfig = input('是否显示标尺？（右下角显示光标位置）(y/n):')
 decide('ruler',rulerConfig)
 
 configFile.writelines('let &termencoding=&encoding\nset fileencodings=utf-8,gbk ')
 
-print('恭喜！最基本的设置已经基本完成！\n但是，如果你想更方便的使用Vim，请使用Spacemaacs+evil插件（笑），别像我一样跳到这个坑结果被虐的死去活来...')
+print('恭喜！最基本的设置已经基本完成！\n但是，如果你想更方便的使用Vim，请使用VScode+Vim插件，\n或者Spacemaacs+evil插件（笑），别像我一样跳到这个坑结果被虐的死去活来...')
 configFile.close()
-os.system('pause')
-print('感谢你的使用！再见')
-os.system('pause')
+print('感谢你的使用，按任意键即可打开Vim！再见')
+os.system('read')
+os.system('vim')
