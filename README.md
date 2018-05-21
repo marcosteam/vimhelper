@@ -1,7 +1,9 @@
 # Vimhelper
+
 An easiest way to DIY your Vim.
 
 #How to use
+
 Just download this sctript,then
 
 `py vimhelper.py`
@@ -9,6 +11,7 @@ Just download this sctript,then
 That's it! Enjoy!
 
 #TODO
+
 Add more system and more language support.
 Also,more config!
 
